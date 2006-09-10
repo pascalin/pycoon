@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8" ?>
+
+<server>
+  <logging> <!--Put this first so that debugging info for server startup is shown-->
+    <log-debug-info use="yes" />
+    <log-up-down use="yes" />
+    <log-errors use="yes" />
+    <log-requests use="yes" />
+  </logging>
+  <details>
+    <name>localhost</name>
+    <admin-email>www@localhost</admin-email>
+  </details>
+  <files-cache use="yes">
+    <max-files-cache>15</max-files-cache>
+    <max-file-size>512 * 1024</max-file-size>
+  </files-cache>
+  <requests-cache use="yes">
+    <max-requests-cache>30</max-requests-cache>
+    <max-request-size>1024 * 1024</max-request-size>
+  </requests-cache>
+  <components>
+    <built-in>
+      <component name="parameter" module="pycoon.parameter" class="parameter" />
+      <component name="read" module="pycoon.read" class="read" />
+    </built-in>
+    <selectors>
+
+    </selectors>
+    <generators>
+      <generator name="file" module="pycoon.generators.xml_generator" class="xml_generator" />
+      <generator name="xpath" module="pycoon.generators.xpath_generator" class="xpath_generator" />
+      <generator name="xquery" module="pycoon.generators.xquery_generator" class="xquery_generator" backend="dbxml" />
+      <generator name="swishe" module="pycoon.generators.swishe_generator" class="swishe_generator" />
+      <generator name="aggregate" module="pycoon.generators.aggregate_generator" class="aggregate_generator" />
+      <generator name="command" module="pycoon.generators.command_generator" class="command_generator" />
+      <generator name="sql" module="pycoon.generators.sql_generator" class="sql_generator" backend="mysql" />
+      <generator name="directory-list" module="pycoon.generators.directory_generator" class="directory_generator" />
+    </generators>
+    <transformers>
+      <transformer name="xslt" module="pycoon.transformers.xslt_transformer" class="xslt_transformer" />
+      <transformer name="command" module="pycoon.transformers.command_transformer" class="command_transformer" />
+      <transformer name="sax-handler" module="pycoon.transformers.sax_handler_transformer" class="sax_handler_transformer" />
+    </transformers>
+    <serializers>
+      <serializer name="xml" module="pycoon.serializers.xml_serializer" class="xml_serializer" />
+      <serializer name="html" module="pycoon.serializers.html_serializer" class="html_serializer" />
+      <serializer name="xhtml" module="pycoon.serializers.xhtml_serializer" class="xhtml_serializer" />
+      <serializer name="svg" module="pycoon.serializers.svg_serializer" class="svg_serializer" />
+      <serializer name="pdf" module="pycoon.serializers.pdf_serializer" class="pdf_serializer" />
+    </serializers>
+  </components>
+  <pipelines>
+    <pipeline name="not-found" on-error-code="404" mime="text/html">
+      <generate type="file" src="resources/not-found.xml" />
+      <transform type="xslt" src="resources/error2html.xslt">
+	<parameter name="uri" value="'{uri}'" />
+      </transform>
+      <serialize type="xhtml" />
+    </pipeline>
+    <pipeline name="bad-request" on-error-code="400" mime="text/html">
+      <generate type="file" src="resources/bad-request.xml" />
+      <transform type="xslt" src="resources/error2html.xslt">
+	<parameter name="uri" value="'{uri}'" />
+      </transform>
+      <serialize type="xhtml" />
+    </pipeline>
+    <pipeline name="internal-error" on-error-code="500" mime="text/html">
+      <generate type="file" src="resources/internal-error.xml" />
+      <transform type="xslt" src="resources/error2html.xslt">
+	<parameter name="uri" value="'{uri}'" />
+	<parameter name="traceback" value="'{traceback}'" />
+      </transform>
+      <serialize type="xhtml" />
+    </pipeline>
+  </pipelines>
+</server>
