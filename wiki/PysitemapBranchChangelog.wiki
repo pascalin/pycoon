@@ -14,7 +14,7 @@ The programming part of 0.2 release is almost done. Documentation is still on th
   * Support for `<map:mount>` ([http://code.google.com/p/pycoon/issues/detail?id=17 #17])
   * Added rawegg: URI scheme ([http://code.google.com/p/pycoon/issues/detail?id=19 #19])
   * Added logging of HTTP requests on "info" logging level
-([http://code.google.com/p/pycoon/issues/detail?id=18 #18])
+    ([http://code.google.com/p/pycoon/issues/detail?id=18 #18])
   * Support for HTTP POST urlencoded parameters
   * Root sitemap addressing via cocoon:// URI
   * Minor enhancements and bug fixes
@@ -29,7 +29,7 @@ Bug fix release.
   * Removed unnecessarily [http://effbot.org/zone/element-index.htm elementtree] dependency
   * Fixed some platform-related [http://codespeak.net/lxml/ lxml] version issues
   * Fixed bugs with downloading sources and building eggs from
-[http://cheeseshop.python.org/pypi/pycoon/ Cheese Shop]
+    [http://cheeseshop.python.org/pypi/pycoon/ Cheese Shop]
 
 [http://pycoon.googlecode.com/svn/tags/pysitemap/0.2a2/|View tag]
 
